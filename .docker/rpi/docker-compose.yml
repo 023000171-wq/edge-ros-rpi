@@ -1,0 +1,35 @@
+services:
+
+  ros2:
+    build:
+      context: ../..
+      dockerfile: .docker/rpi/Dockerfile
+
+    image: rpi-ros2
+    container_name: upsrj-ros2
+
+    # host = descubrimiento DDS transparente en la LAN (misma que la ESP32 en modo UDP)
+    network_mode: host
+    ipc: host
+
+    privileged: true          # acceso a GPIO/I2C/serial en RPi
+
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - ../../ros2_ws:/ros2_ws
+      # udev para hotplug de dispositivos USB (ESP32 por serial)
+      - /dev:/dev
+
+    environment:
+      ROS_DOMAIN_ID: 0
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+
+    # ESP32 sobre USB-serial. Ajusta según tu placa:
+    #   CP2102  -> /dev/ttyUSB0
+    #   CH340   -> /dev/ttyUSB0
+    #   ESP32-S3 nativo USB -> /dev/ttyACM0
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      # - /dev/ttyACM0:/dev/ttyACM0

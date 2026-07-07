@@ -1,0 +1,10 @@
+menu "LED Listener Configuration"
+
+    config LED_GPIO
+        int "GPIO del LED integrado"
+        default 2
+        help
+            Numero de GPIO conectado al LED integrado de la placa.
+            ESP32 DevKit: 2   |   ESP32-S3 DevKitC: 48
+
+endmenu

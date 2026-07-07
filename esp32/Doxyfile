@@ -1,0 +1,15 @@
+# Doxyfile minimo para el firmware ESP32 micro-ROS LED listener
+PROJECT_NAME           = "ESP32 micro-ROS LED Listener"
+PROJECT_BRIEF          = "Nodo micro-ROS (ESP-IDF v6.0 + FreeRTOS) suscrito a /led_cmd"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = main
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+JAVADOC_AUTOBRIEF      = YES
+QUIET                  = YES
+WARN_NO_PARAMDOC       = YES

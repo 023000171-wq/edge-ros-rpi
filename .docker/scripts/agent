@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Lanza el micro-ROS Agent dentro del container ya corriendo.
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/.config"
+
+# Transporte por defecto: serial. Uso:
+#   agent                       -> serial en /dev/ttyUSB0 @ 115200
+#   agent serial /dev/ttyACM0   -> serial en otro puerto
+#   agent udp4 8888             -> Wi-Fi (ESP32 en modo micro-ROS UDP)
+TRANSPORT="${1:-serial}"
+
+case "$TRANSPORT" in
+    serial)
+        DEV="${2:-/dev/ttyUSB0}"
+        BAUD="${3:-115200}"
+        echo "micro-ROS Agent :: serial dev=$DEV baud=$BAUD"
+        docker exec -it ${CONTAINER_NAME} bash -c "
+            source /opt/ros/jazzy/setup.bash
+            source /uros_ws/install/local_setup.bash
+            ros2 run micro_ros_agent micro_ros_agent serial --dev $DEV -b $BAUD
+        "
+        ;;
+    udp4)
+        PORT="${2:-8888}"
+        echo "micro-ROS Agent :: udp4 port=$PORT"
+        docker exec -it ${CONTAINER_NAME} bash -c "
+            source /opt/ros/jazzy/setup.bash
+            source /uros_ws/install/local_setup.bash
+            ros2 run micro_ros_agent micro_ros_agent udp4 --port $PORT
+        "
+        ;;
+    *)
+        echo "Uso: agent [serial <dev> <baud> | udp4 <port>]"
+        exit 1
+        ;;
+esac

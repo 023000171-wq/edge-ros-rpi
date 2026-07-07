@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cmd="$1"; shift || true
+
+case "$cmd" in
+    dev)   exec "$SCRIPT_DIR/dev" ;;
+    agent) exec "$SCRIPT_DIR/agent" "$@" ;;
+    rm)    exec "$SCRIPT_DIR/rm" ;;
+    *)
+        echo "Usage:"
+        echo "  robot dev                     -> start dev container / open shell"
+        echo "  robot agent                   -> micro-ROS Agent (serial /dev/ttyUSB0)"
+        echo "  robot agent serial <dev> <b>  -> micro-ROS Agent serial custom"
+        echo "  robot agent udp4 <port>       -> micro-ROS Agent Wi-Fi (UDP)"
+        echo "  robot rm                      -> remove container and free space"
+        ;;
+esac

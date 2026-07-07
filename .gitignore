@@ -1,0 +1,50 @@
+# ------------------------------------------------------------
+#  ROS 2 / colcon  (ros2_ws/)
+# ------------------------------------------------------------
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+# Config local del middleware (por máquina)
+ros2_ws/.colcon/
+
+# ------------------------------------------------------------
+#  ESP-IDF firmware  (esp32/)
+# ------------------------------------------------------------
+esp32/build/
+esp32/sdkconfig
+esp32/sdkconfig.old
+esp32/managed_components/
+esp32/dependencies.lock
+# Componente micro-ROS: se clona, no se versiona (salvo que lo pongas como submódulo)
+esp32/components/micro_ros_espidf_component/
+# Doxygen output DEL firmware (docs/ raíz NO se ignora, ver abajo)
+esp32/docs/
+
+# ------------------------------------------------------------
+#  Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# ------------------------------------------------------------
+#  Editores / IDE
+# ------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+
+# ------------------------------------------------------------
+#  Sistema operativo
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------
+#  Entorno / secretos
+# ------------------------------------------------------------
+.env
+*.local
